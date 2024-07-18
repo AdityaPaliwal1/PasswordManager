@@ -8,6 +8,8 @@ const Port = 5000;
 app.use(cors());
 app.use(express.json());
 
+
+//database connection
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
@@ -22,9 +24,13 @@ app.get("/", (req, res) => {
   res.send("Server is Live😄");
 });
 
+
+//route to add passwords
 app.post("/addpasswords", (req, res) => {
   const { password, title } = req.body;
 
+
+  //inserting values into database
   db.query(
     "INSERT INTO passwords (passwords , title) VALUES (?,?)",
     [password, title],
