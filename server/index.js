@@ -46,3 +46,14 @@ app.post("/addpasswords", (req, res) => {
     }
   );
 });
+
+app.get("/showpasswords", (req,res)=>{
+  db.query("SELECT * FROM passwords", (err , result)=>{
+    if(err){
+      console.log(err);
+      console.log("Failed to fetch data");
+    }else{
+      res.send(result);
+    }
+  })
+});

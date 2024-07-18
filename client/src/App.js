@@ -1,10 +1,17 @@
 import "./App.css";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import axios from "axios";
 function App() {
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
+  const[passwordList , setPasswordList] = useState([]);
 
+
+  useEffect(()=>{
+    axios.get("http://localhost:5000/showpasswords").then((response)=>{
+      setPasswordList(response.data);
+    })
+  },[])
   const addpassword = () => {
     axios.post("http://localhost:5000/addpasswords", {
       password: password,
@@ -29,6 +36,17 @@ function App() {
           }}
         />
         <button onClick={addpassword}>Add Password</button>
+      </div>
+
+
+      <div className="passwords">
+        {passwordList.map((val)=>{
+          return (
+            <div className="password">
+              <h3>{val.title}</h3>
+            </div>
+          ); 
+        })}
       </div>
     </div>
   );
